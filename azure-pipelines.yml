@@ -14,5 +14,17 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+- task: SonarQubePrepare@7
+  inputs:
+    SonarQube: sonarqube
+    scannerMode: dotnet
+    projectKey: RsDocs
+
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
+
+- task: SonarQubeAnalyze@7
+
+- task: SonarQubePublish@7
+  inputs:
+    pollingTimeoutSec: '300'
